@@ -6,12 +6,16 @@ matrix:
   include:
   - compiler: gcc
     os: linux
-    arch: ppc64le
+    arch: 
+      - amd64
+      - ppc64le
     env: DO_MAINTAINER_CHECKS=yes USE_CONFIG=no
 
   - compiler: gcc-8
     os: linux
-    arch: ppc64le
+    arch: 
+      - amd64
+      - ppc64le
     env: USE_CONFIG=yes CC=gcc-8 AR=gcc-ar-8
     addons:
       apt:
@@ -23,7 +27,9 @@ matrix:
   # An optimised build with address and leak checking, also using libdeflate
   - compiler: gcc-8
     os: linux
-    arch: ppc64le
+    arch: 
+      - amd64
+      - ppc64le
     dist: xenial
     env: USE_CONFIG=yes USE_LIBDEFLATE=yes CC=gcc-8 AR=gcc-ar-8 CFLAGS="-g -Wall -O3 -fsanitize=address" LDFLAGS="-fsanitize=address"
     addons:
@@ -47,17 +53,23 @@ matrix:
 
   - compiler: gcc
     os: linux
-    arch: ppc64le
+    arch: 
+      - amd64
+      - ppc64le
     env: USE_CONFIG=yes
 
   - compiler: clang
     os: linux
-    arch: ppc64le
+    arch: 
+      - amd64
+      - ppc64le
     env: USE_CONFIG=yes
 
   - compiler: gcc
     os: linux
-    arch: ppc64le
+    arch: 
+      - amd64
+      - ppc64le
     env: CFLAGS="-std=c99 -pedantic" USE_CONFIG=yes
 
   # Big-endian
