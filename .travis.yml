@@ -6,16 +6,10 @@ matrix:
   include:
   - compiler: gcc
     os: linux
-    arch: 
-      - amd64
-      - ppc64le
     env: DO_MAINTAINER_CHECKS=yes USE_CONFIG=no
 
   - compiler: gcc-8
     os: linux
-    arch: 
-      - amd64
-      - ppc64le
     env: USE_CONFIG=yes CC=gcc-8 AR=gcc-ar-8
     addons:
       apt:
@@ -27,9 +21,6 @@ matrix:
   # An optimised build with address and leak checking, also using libdeflate
   - compiler: gcc-8
     os: linux
-    arch: 
-      - amd64
-      - ppc64le
     dist: xenial
     env: USE_CONFIG=yes USE_LIBDEFLATE=yes CC=gcc-8 AR=gcc-ar-8 CFLAGS="-g -Wall -O3 -fsanitize=address" LDFLAGS="-fsanitize=address"
     addons:
@@ -53,23 +44,14 @@ matrix:
 
   - compiler: gcc
     os: linux
-    arch: 
-      - amd64
-      - ppc64le
     env: USE_CONFIG=yes
 
   - compiler: clang
     os: linux
-    arch: 
-      - amd64
-      - ppc64le
     env: USE_CONFIG=yes
 
   - compiler: gcc
     os: linux
-    arch: 
-      - amd64
-      - ppc64le
     env: CFLAGS="-std=c99 -pedantic" USE_CONFIG=yes
 
   # Big-endian
@@ -82,7 +64,51 @@ matrix:
         packages:
           - libbz2-dev
           - liblzma-dev
-          
+  #powerjobs
+  - compiler: gcc
+    os: linux
+    arch: ppc64le
+    env: DO_MAINTAINER_CHECKS=yes USE_CONFIG=no
+
+  - compiler: gcc-8
+    os: linux
+    arch: ppc64le
+    env: USE_CONFIG=yes CC=gcc-8 AR=gcc-ar-8
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - gcc-8
+
+  # An optimised build with address and leak checking, also using libdeflate
+  - compiler: gcc-8
+    os: linux
+    arch: ppc64le
+    dist: xenial
+    env: USE_CONFIG=yes USE_LIBDEFLATE=yes CC=gcc-8 AR=gcc-ar-8 CFLAGS="-g -Wall -O3 -fsanitize=address" LDFLAGS="-fsanitize=address"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - gcc-8
+
+  - compiler: gcc
+    os: linux
+    arch: ppc64le
+    env: USE_CONFIG=yes
+
+  - compiler: clang
+    os: linux
+    arch: ppc64le
+    env: USE_CONFIG=yes
+
+  - compiler: gcc
+    os: linux
+    arch: ppc64le
+    env: CFLAGS="-std=c99 -pedantic" USE_CONFIG=yes
+ 
 
 # For MacOSX systems
 before_install:
@@ -90,7 +116,6 @@ before_install:
     if [[ "$TRAVIS_OS_NAME" == "osx" && "$USE_CONFIG" == "no" ]]; then
       HOMEBREW_NO_AUTO_UPDATE=1 brew install xz || ( brew update && brew install xz )
     fi
-
 before_script:
   - |
     if test "x$USE_LIBDEFLATE" == "xyes"; then
@@ -101,7 +126,6 @@ before_script:
         popd && \
         popd
     fi
-
 script:
   - |
     if test "x$USE_LIBDEFLATE" = "xyes"; then
